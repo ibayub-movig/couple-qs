@@ -50,6 +50,25 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
+## Airtable Setup
+
+This project now pulls questions from Airtable instead of using hardcoded data. To set this up:
+
+1. Create an Airtable base with a table called "Questions"
+2. Add the following fields to your Questions table:
+   - `Text` (Single line text) - The question text
+   - `Level` (Single select) - Choose from: perception, connection, reflection, wildcard
+   - `Order` (Number) - Optional, for custom ordering
+
+3. Create a `.env` file in the root directory with:
+   ```
+   VITE_AIRTABLE_API_KEY=your_airtable_api_key_here
+   VITE_AIRTABLE_BASE_ID=your_airtable_base_id_here
+   ```
+
+4. Get your API key from [Airtable Account](https://airtable.com/account)
+5. Get your Base ID from the Airtable API documentation URL when you view your base
+
 ## What technologies are used for this project?
 
 This project is built with:
@@ -59,6 +78,8 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Airtable (for data)
+- React Query (for data fetching)
 
 ## How can I deploy this project?
 

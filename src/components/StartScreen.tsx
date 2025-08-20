@@ -13,11 +13,8 @@ export function StartScreen({ onStart }: StartScreenProps) {
         {/* Header */}
         <div className="mb-12">
           <h1 className="text-5xl md:text-6xl font-bold bg-gradient-romantic bg-clip-text text-transparent mb-4">
-            Connection Cards
+            Connection Cards Ibs y Thali
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            100 questions to deepen your connection and discover each other on a whole new level
-          </p>
         </div>
 
         {/* Level cards */}
@@ -28,10 +25,10 @@ export function StartScreen({ onStart }: StartScreenProps) {
             <p className="text-sm text-white/80">30 questions about first impressions and assumptions</p>
           </Card>
 
-          <Card className="p-6 bg-gradient-to-br from-warm-pink to-soft-pink border-0 text-white shadow-soft">
+          <Card className="p-6 bg-gradient-to-br from-warm-pink to-soft-pink border-0 text-gray-800 shadow-soft">
             <Users className="w-8 h-8 mx-auto mb-4" />
             <h3 className="font-bold text-lg mb-2">Connection</h3>
-            <p className="text-sm text-white/80">30 questions for deeper bonding and vulnerability</p>
+            <p className="text-sm text-gray-700">30 questions for deeper bonding and vulnerability</p>
           </Card>
 
           <Card className="p-6 bg-gradient-to-br from-gold to-coral border-0 text-white shadow-soft">
@@ -54,11 +51,8 @@ export function StartScreen({ onStart }: StartScreenProps) {
             size="lg"
             className="bg-gradient-romantic hover:shadow-romantic text-white border-0 px-12 py-6 text-lg font-semibold shadow-soft hover:scale-105 transition-all duration-300"
           >
-            Start Your Journey
+            Empecemos
           </Button>
-          <p className="text-sm text-muted-foreground">
-            Take turns picking questions and let the magic happen ✨
-          </p>
         </div>
       </div>
     </div>

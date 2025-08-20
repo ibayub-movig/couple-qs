@@ -1,17 +1,27 @@
-import { useState } from "react";
-import { questions, Question } from "@/data/questions";
+import { useState, useEffect } from "react";
+import { useQuestions } from "@/hooks/useQuestions";
+import { Question } from "@/services/airtable";
 import { StartScreen } from "@/components/StartScreen";
 import { DeckSelector } from "@/components/DeckSelector";
 import { CardDisplay } from "@/components/CardDisplay";
 import { UsedPile } from "@/components/UsedPile";
+import { AirtableDebug } from "@/components/AirtableDebug";
 
 type GameState = 'start' | 'selecting' | 'viewing';
 
 const Index = () => {
+  const { data: questions = [], isLoading, error } = useQuestions();
   const [gameState, setGameState] = useState<GameState>('start');
-  const [availableQuestions, setAvailableQuestions] = useState(questions);
+  const [availableQuestions, setAvailableQuestions] = useState<Question[]>([]);
   const [usedQuestions, setUsedQuestions] = useState<Question[]>([]);
   const [currentCard, setCurrentCard] = useState<Question | null>(null);
+
+  // Update available questions when data is loaded
+  useEffect(() => {
+    if (questions.length > 0) {
+      setAvailableQuestions(questions);
+    }
+  }, [questions]);
 
   const handleStart = () => {
     setGameState('selecting');
@@ -66,6 +76,38 @@ const Index = () => {
     setGameState('selecting');
   };
 
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-soft flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral mx-auto mb-4"></div>
+          <p className="text-lg text-muted-foreground">Loading questions...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-soft flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-6">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Questions</h2>
+          <p className="text-muted-foreground mb-4">
+            {error.message || 'Failed to load questions from Airtable. Please check your configuration.'}
+          </p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="bg-gradient-romantic text-white px-6 py-2 rounded-lg hover:opacity-90"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (gameState === 'start') {
     return <StartScreen onStart={handleStart} />;
   }
@@ -97,6 +139,8 @@ const Index = () => {
           onPutBack={putCardBack}
         />
       )}
+      
+      <AirtableDebug />
     </div>
   );
 };

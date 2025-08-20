@@ -1,4 +1,4 @@
-import { Question, levelInfo } from "@/data/questions";
+import { Question, levelInfo } from "@/services/airtable";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, Users, Lightbulb, Sparkles, RotateCcw, Check } from "lucide-react";
