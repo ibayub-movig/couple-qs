@@ -20,6 +20,7 @@ export interface AirtableQuestion {
     Text: string;
     Level: 'perception' | 'connection' | 'reflection' | 'wildcard';
     Order?: number;
+    IbsPicks?: string;
   };
 }
 
@@ -27,6 +28,7 @@ export interface Question {
   id: string;
   text: string;
   level: 'perception' | 'connection' | 'reflection' | 'wildcard';
+  ibsPicks?: string;
 }
 
 export const fetchQuestionsFromAirtable = async (): Promise<Question[]> => {
@@ -80,7 +82,8 @@ export const fetchQuestionsFromAirtable = async (): Promise<Question[]> => {
       return {
         id: record.id,
         text: text,
-        level: mappedLevel
+        level: mappedLevel,
+        ibsPicks: record.fields.IbsPicks
       };
     }).filter(Boolean) as Question[];
   } catch (error) {

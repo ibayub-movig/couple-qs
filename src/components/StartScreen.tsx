@@ -21,26 +21,22 @@ export function StartScreen({ onStart }: StartScreenProps) {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <Card className="p-6 bg-gradient-to-br from-coral to-warm-pink border-0 text-white shadow-soft">
             <Heart className="w-8 h-8 mx-auto mb-4" />
-            <h3 className="font-bold text-lg mb-2">Perception</h3>
-            <p className="text-sm text-white/80">30 questions about first impressions and assumptions</p>
+            <h3 className="font-bold text-lg">Perception</h3>
           </Card>
 
           <Card className="p-6 bg-gradient-to-br from-warm-pink to-soft-pink border-0 text-gray-800 shadow-soft">
             <Users className="w-8 h-8 mx-auto mb-4" />
-            <h3 className="font-bold text-lg mb-2">Connection</h3>
-            <p className="text-sm text-gray-700">30 questions for deeper bonding and vulnerability</p>
+            <h3 className="font-bold text-lg">Connection</h3>
           </Card>
 
           <Card className="p-6 bg-gradient-to-br from-gold to-coral border-0 text-white shadow-soft">
             <Lightbulb className="w-8 h-8 mx-auto mb-4" />
-            <h3 className="font-bold text-lg mb-2">Reflection</h3>
-            <p className="text-sm text-white/80">30 questions for understanding and growth</p>
+            <h3 className="font-bold text-lg">Reflection</h3>
           </Card>
 
           <Card className="p-6 bg-gradient-to-br from-deep-coral to-coral border-0 text-white shadow-soft">
             <Sparkles className="w-8 h-8 mx-auto mb-4" />
-            <h3 className="font-bold text-lg mb-2">Wildcards</h3>
-            <p className="text-sm text-white/80">10 fun actions to make things exciting</p>
+            <h3 className="font-bold text-lg">Wildcards</h3>
           </Card>
         </div>
 

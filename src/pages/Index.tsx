@@ -5,7 +5,6 @@ import { StartScreen } from "@/components/StartScreen";
 import { DeckSelector } from "@/components/DeckSelector";
 import { CardDisplay } from "@/components/CardDisplay";
 import { UsedPile } from "@/components/UsedPile";
-import { AirtableDebug } from "@/components/AirtableDebug";
 
 type GameState = 'start' | 'selecting' | 'viewing';
 
@@ -15,6 +14,7 @@ const Index = () => {
   const [availableQuestions, setAvailableQuestions] = useState<Question[]>([]);
   const [usedQuestions, setUsedQuestions] = useState<Question[]>([]);
   const [currentCard, setCurrentCard] = useState<Question | null>(null);
+  const [isIbsPicksMode, setIsIbsPicksMode] = useState(false);
 
   // Update available questions when data is loaded
   useEffect(() => {
@@ -35,31 +35,52 @@ const Index = () => {
   };
 
   const getDeckCounts = () => {
+    const filteredQuestions = isIbsPicksMode 
+      ? availableQuestions.filter(q => q.ibsPicks && q.ibsPicks.trim() !== '')
+      : availableQuestions;
+      
     return {
-      perception: availableQuestions.filter(q => q.level === 'perception').length,
-      connection: availableQuestions.filter(q => q.level === 'connection').length,
-      reflection: availableQuestions.filter(q => q.level === 'reflection').length,
-      wildcard: availableQuestions.filter(q => q.level === 'wildcard').length,
+      perception: filteredQuestions.filter(q => q.level === 'perception').length,
+      connection: filteredQuestions.filter(q => q.level === 'connection').length,
+      reflection: filteredQuestions.filter(q => q.level === 'reflection').length,
+      wildcard: filteredQuestions.filter(q => q.level === 'wildcard').length,
     };
   };
 
+  const getIbsPicksCount = () => {
+    return availableQuestions.filter(q => q.ibsPicks && q.ibsPicks.trim() !== '').length;
+  };
+
   const drawRandomFromDeck = (level: 'perception' | 'connection' | 'reflection' | 'wildcard') => {
-    const levelQuestions = availableQuestions.filter(q => q.level === level);
+    let levelQuestions = availableQuestions.filter(q => q.level === level);
+    
+    if (isIbsPicksMode) {
+      levelQuestions = levelQuestions.filter(q => q.ibsPicks && q.ibsPicks.trim() !== '');
+    }
+    
     if (levelQuestions.length === 0) return;
     
     const randomIndex = Math.floor(Math.random() * levelQuestions.length);
     const selectedCard = levelQuestions[randomIndex];
     setCurrentCard(selectedCard);
     setGameState('viewing');
+    setIsIbsPicksMode(false); // Reset to normal mode after drawing
   };
 
   const drawRandomCard = () => {
-    if (availableQuestions.length === 0) return;
+    let questionsToDrawFrom = availableQuestions;
     
-    const randomIndex = Math.floor(Math.random() * availableQuestions.length);
-    const selectedCard = availableQuestions[randomIndex];
+    if (isIbsPicksMode) {
+      questionsToDrawFrom = availableQuestions.filter(q => q.ibsPicks && q.ibsPicks.trim() !== '');
+    }
+    
+    if (questionsToDrawFrom.length === 0) return;
+    
+    const randomIndex = Math.floor(Math.random() * questionsToDrawFrom.length);
+    const selectedCard = questionsToDrawFrom[randomIndex];
     setCurrentCard(selectedCard);
     setGameState('viewing');
+    setIsIbsPicksMode(false); // Reset to normal mode after drawing
   };
 
   const markCardAsUsed = () => {
@@ -113,13 +134,16 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-soft py-8">
+    <div className="min-h-screen bg-gradient-soft py-4 sm:py-8 px-4 sm:px-0">
       {gameState === 'selecting' && (
         <div className="space-y-8">
           <DeckSelector
             deckCounts={getDeckCounts()}
             onSelectDeck={drawRandomFromDeck}
             onRandomDraw={drawRandomCard}
+            isIbsPicksMode={isIbsPicksMode}
+            onToggleIbsPicks={setIsIbsPicksMode}
+            ibsPicksCount={getIbsPicksCount()}
           />
           {usedQuestions.length > 0 && (
             <div className="max-w-md mx-auto">
@@ -139,8 +163,6 @@ const Index = () => {
           onPutBack={putCardBack}
         />
       )}
-      
-      <AirtableDebug />
     </div>
   );
 };

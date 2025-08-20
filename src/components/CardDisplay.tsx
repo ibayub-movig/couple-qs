@@ -23,29 +23,36 @@ const levelStyles = {
   wildcard: "from-deep-coral to-coral"
 };
 
+const levelTextColors = {
+  perception: "text-white",
+  connection: "text-gray-800", 
+  reflection: "text-white",
+  wildcard: "text-white"
+};
+
 export function CardDisplay({ question, onMarkAsUsed, onPutBack }: CardDisplayProps) {
   const level = levelInfo[question.level];
   const Icon = levelIcons[question.level];
   const gradientStyle = levelStyles[question.level];
+  const textColor = levelTextColors[question.level];
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-6">
+    <div className="w-full max-w-2xl mx-auto p-4 sm:p-6">
       {/* Level indicator */}
       <div className="text-center mb-6">
-        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${gradientStyle} text-white shadow-soft`}>
+        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${gradientStyle} ${textColor} shadow-soft`}>
           <Icon className="w-4 h-4" />
           <span className="font-medium text-sm">{level.title}</span>
         </div>
-        <p className="text-muted-foreground text-sm mt-2">{level.description}</p>
       </div>
 
       {/* Question card */}
-      <Card className={`p-8 shadow-romantic bg-gradient-to-br ${gradientStyle} border-0 text-white relative overflow-hidden mb-6`}>
+      <Card className={`p-6 sm:p-8 shadow-romantic bg-gradient-to-br ${gradientStyle} border-0 text-white relative overflow-hidden mb-6`}>
         <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
         <div className="relative z-10">
           {/* Question */}
           <div className="text-center">
-            <h2 className="text-2xl md:text-3xl font-bold leading-relaxed mb-6">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold leading-relaxed mb-6">
               {question.text}
             </h2>
           </div>
@@ -53,7 +60,7 @@ export function CardDisplay({ question, onMarkAsUsed, onPutBack }: CardDisplayPr
       </Card>
 
       {/* Actions */}
-      <div className="flex gap-4 justify-center">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
         <Button
           variant="outline"
           onClick={onPutBack}
