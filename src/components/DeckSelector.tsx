@@ -26,15 +26,15 @@ const levelIcons = {
 };
 
 const levelStyles = {
-  perception: "from-coral to-warm-pink",
-  connection: "from-warm-pink to-soft-pink", 
-  reflection: "from-gold to-coral",
-  wildcard: "from-deep-coral to-coral"
+  perception: "bg-coral",
+  connection: "bg-warm-pink", 
+  reflection: "bg-gold",
+  wildcard: "bg-deep-coral"
 };
 
 const levelTextColors = {
   perception: "text-white",
-  connection: "text-gray-800", 
+  connection: "text-white", 
   reflection: "text-white",
   wildcard: "text-white"
 };
@@ -43,7 +43,7 @@ export function DeckSelector({ deckCounts, onSelectDeck, onRandomDraw, isIbsPick
   const totalCards = Object.values(deckCounts).reduce((sum, count) => sum + count, 0);
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Choose Your Cards</h1>
         <p className="text-sm sm:text-base text-muted-foreground">Pick from any deck or draw randomly</p>
@@ -58,7 +58,7 @@ export function DeckSelector({ deckCounts, onSelectDeck, onRandomDraw, isIbsPick
           return (
             <Card 
               key={level}
-              className={`p-3 sm:p-4 cursor-pointer transition-all duration-300 hover:scale-105 bg-gradient-to-br ${gradientStyle} border-0 ${levelTextColors[level]} ${count === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`p-3 sm:p-4 cursor-pointer transition-all duration-300 hover:scale-105 ${gradientStyle} border-0 ${levelTextColors[level]} ${count === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={() => count > 0 && onSelectDeck(level)}
             >
               <div className="text-center">
@@ -71,11 +71,11 @@ export function DeckSelector({ deckCounts, onSelectDeck, onRandomDraw, isIbsPick
         })}
       </div>
 
-      {/* Ibs Picks Toggle */}
+      {/* Hot Picks Toggle */}
       <div className="flex items-center justify-center gap-2 sm:gap-3 mb-6">
         <div className="flex items-center gap-1 sm:gap-2">
           <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" />
-          <span className="font-medium text-sm sm:text-base">Ibs Picks</span>
+          <span className="font-medium text-sm sm:text-base">Hot Picks</span>
         </div>
         <Switch
           checked={isIbsPicksMode}
@@ -91,7 +91,7 @@ export function DeckSelector({ deckCounts, onSelectDeck, onRandomDraw, isIbsPick
         <Button 
           onClick={onRandomDraw}
           disabled={totalCards === 0}
-          className="bg-gradient-to-r from-coral to-warm-pink text-white hover:from-warm-pink hover:to-soft-pink text-sm sm:text-base"
+          className="bg-primary text-white hover:bg-primary/90 text-sm sm:text-base shadow-soft font-semibold border-0"
           size="lg"
         >
           <Shuffle className="w-4 h-4 mr-2" />

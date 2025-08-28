@@ -17,15 +17,15 @@ const levelIcons = {
 };
 
 const levelStyles = {
-  perception: "from-coral to-warm-pink",
-  connection: "from-warm-pink to-soft-pink", 
-  reflection: "from-gold to-coral",
-  wildcard: "from-deep-coral to-coral"
+  perception: "bg-coral",
+  connection: "bg-warm-pink", 
+  reflection: "bg-gold",
+  wildcard: "bg-deep-coral"
 };
 
 const levelTextColors = {
   perception: "text-white",
-  connection: "text-gray-800", 
+  connection: "text-white", 
   reflection: "text-white",
   wildcard: "text-white"
 };
@@ -40,14 +40,14 @@ export function CardDisplay({ question, onMarkAsUsed, onPutBack }: CardDisplayPr
     <div className="w-full max-w-2xl mx-auto p-4 sm:p-6">
       {/* Level indicator */}
       <div className="text-center mb-6">
-        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${gradientStyle} ${textColor} shadow-soft`}>
+        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${gradientStyle} ${textColor} shadow-soft`}>
           <Icon className="w-4 h-4" />
           <span className="font-medium text-sm">{level.title}</span>
         </div>
       </div>
 
       {/* Question card */}
-      <Card className={`p-6 sm:p-8 shadow-romantic bg-gradient-to-br ${gradientStyle} border-0 text-white relative overflow-hidden mb-6`}>
+      <Card className={`p-6 sm:p-8 shadow-medium ${gradientStyle} border-0 text-white relative overflow-hidden mb-6`}>
         <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
         <div className="relative z-10">
           {/* Question */}
@@ -72,7 +72,7 @@ export function CardDisplay({ question, onMarkAsUsed, onPutBack }: CardDisplayPr
         
         <Button
           onClick={onMarkAsUsed}
-          className={`bg-gradient-to-r ${gradientStyle} text-white hover:opacity-90`}
+          className={`${gradientStyle} text-white hover:opacity-90`}
         >
           <Check className="w-4 h-4 mr-2" />
           Mark as Used

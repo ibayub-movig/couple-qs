@@ -100,9 +100,9 @@ const Index = () => {
   // Show loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-soft flex items-center justify-center">
+      <div className="bg-gradient-soft flex items-center justify-center min-h-[calc(100vh-8rem)]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-lg text-muted-foreground">Loading questions...</p>
         </div>
       </div>
@@ -112,15 +112,15 @@ const Index = () => {
   // Show error state
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-soft flex items-center justify-center">
+      <div className="bg-gradient-soft flex items-center justify-center min-h-[calc(100vh-8rem)]">
         <div className="text-center max-w-md mx-auto p-6">
-          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Questions</h2>
+          <h2 className="text-2xl font-bold text-destructive mb-4">Error Loading Questions</h2>
           <p className="text-muted-foreground mb-4">
             {error.message || 'Failed to load questions from Airtable. Please check your configuration.'}
           </p>
           <button 
             onClick={() => window.location.reload()} 
-            className="bg-gradient-romantic text-white px-6 py-2 rounded-lg hover:opacity-90"
+            className="bg-gradient-primary text-white px-6 py-2 rounded-lg hover:opacity-90"
           >
             Try Again
           </button>
@@ -130,11 +130,16 @@ const Index = () => {
   }
 
   if (gameState === 'start') {
-    return <StartScreen onStart={handleStart} />;
+    // Get a random question for the sample
+    const randomQuestion = questions.length > 0 
+      ? questions[Math.floor(Math.random() * questions.length)]
+      : undefined;
+    
+    return <StartScreen onStart={handleStart} randomQuestion={randomQuestion} />;
   }
 
   return (
-    <div className="min-h-screen bg-gradient-soft py-4 sm:py-8 px-4 sm:px-0">
+    <div className="bg-gradient-soft py-4 sm:py-8">
       {gameState === 'selecting' && (
         <div className="space-y-8">
           <DeckSelector
